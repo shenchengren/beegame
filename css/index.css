@@ -1,0 +1,70 @@
+html,body,div,img,span,ul,li{
+	margin: 0px;
+	padding: 0px;
+}
+ul,li{
+	list-style: none;
+}
+.box{
+	width: 1000px;
+	height: 700px;
+	margin:0 auto;
+	background: #000;
+	position: relative;
+}
+.start,.end{
+	width: 120px;
+	height: 40px;
+	line-height:40px;
+	text-align: center;
+	color: #fff;
+	font-size:22px;
+	border:1px solid #fff;
+	position: absolute;
+	top: 50%;
+	margin-top: -20px;
+	left: 50%;
+	margin-left: -60px;
+}
+.score{
+	position: absolute;
+	left: 0;
+	top: 0;
+	color: #fff;
+	font-size: 22px;
+}
+.honeycomb{
+	/*margin: 0 auto;*/
+	position: relative;
+	top: 40px;
+}
+.enemy1,.enemy2,.enemy3{
+	height: 40px;
+	width: 40px;
+	box-sizing: border-box;
+	border: 1px solid #fff;
+	float: left;
+
+}
+.enemy1{
+	background: #ff0;
+}
+.enemy2{
+	background: #f00;
+}
+.enemy3{
+	background: #f0f;
+}
+.air{
+	width: 60px;
+	height: 80px;
+	background: deeppink;
+	position: absolute;
+}
+.bullet{
+	width: 4px;
+	height: 16px;
+	position: absolute;
+	background: #fff;
+	box-shadow: 0px 0px 5px 4px #1E90FF;
+}
