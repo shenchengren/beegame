@@ -11,29 +11,29 @@ var Game = {
 			style: "enemy1",
 			hp: "1",
 			score: "3",
-			scorePlus:2,
+			scorePlus: 2,
 			speed: 10
 		},
 		em2: {
 			style: "enemy2",
 			hp: "2",
 			score: "5",
-			scorePlus:5,
+			scorePlus: 5,
 			speed: 20
 		},
 		em3: {
 			style: "enemy3",
 			hp: "3",
 			score: "10",
-			scorePlus:10,
+			scorePlus: 10,
 			speed: 30
 		},
 		em4: {
 			style: "enemy4",
 			hp: "5",
 			score: "20",
-			scorePlus:15,
-			speed: 50
+			scorePlus: 15,
+			speed: 35
 		}
 	},
 	checkpoint: [{ //创建数据
@@ -62,20 +62,20 @@ var Game = {
 		iNum: 10,
 		speedX: 30,
 		speedY: 40,
-		timer: 600
+		timer: 800
 	},
 	{
-		data: ["em3", "em4", "em3", "em4", "em3", "em4", "em3", "em4", "em3", "em4", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em1", "em1", "em1", "em1", "em1", "em1", "em1", "em1", "em1", "em1", "em1"],
+		data: ["em3", "em4", "em3", "em4", "em3", "em4", "em3", "em4", "em3", "em4","em3", "em4", "em3", "em4", "em3", "em4", "em3", "em4", "em3", "em4", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em3", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em2", "em1"],
 		iNum: 10,
-		speedX: 30,
-		speedY: 40,
-		timer: 600
+		speedX: 40,
+		speedY: 60,
+		timer: 700
 	}
 	],
 	airData: { //飞机数据
 		air1: {
 			style: "air",
-			speed: 10,
+			speed: 15,
 			bullet: "bullet",
 			bulletNum: 1,
 			hp: 1
@@ -94,6 +94,7 @@ var Game = {
 		this.createTips();
 		this.createEnemy(this.checkpoint[this.level]);
 		this.createAir();
+		this.maxLevel = this.checkpoint.length;//自动获取最高关卡数量
 		this.level++;
 	},
 	createScore: function () { //创建积分
@@ -121,6 +122,7 @@ var Game = {
 		var data = checkpoint.data;
 		var arr = [];
 		var that = this;
+		document.title = this.level + 1;
 		var oUl = document.createElement("ul");
 		oUl.style.width = 40 * checkpoint.iNum + "px";
 		oUl.className = "honeycomb";
@@ -226,19 +228,19 @@ var Game = {
 
 		function move() {
 			if (code == 1) {
-				if(that.oAir.offsetLeft>=0){
+				if (that.oAir.offsetLeft >= 0) {
 					that.oAir.style.left = that.oAir.offsetLeft - that.oAir.speed + "px";
-				}else{
+				} else {
 					clearInterval(that.oAir.timer);
 				}
-			
+
 			} else if (code == 2) {
-				if(that.oAir.offsetLeft<=(that.oBox.offsetWidth - that.oAir.offsetWidth)){
+				if (that.oAir.offsetLeft <= (that.oBox.offsetWidth - that.oAir.offsetWidth)) {
 					that.oAir.style.left = that.oAir.offsetLeft + that.oAir.speed + "px";
-				}else{
+				} else {
 					clearInterval(that.oAir.timer);
 				}
-				
+
 			}
 		}
 	},
@@ -266,15 +268,14 @@ var Game = {
 				if (that.collision(oB, that.oLi[i])) {
 					if (that.oLi[i].hp == 1) {//消灭敌人
 						var oScoreText = document.createElement("span");
-						oScoreText.className  = "scoretext";
+						oScoreText.className = "scoretext";
 						oScoreText.style.left = oB.offsetLeft + "px";
-						oScoreText.style.top  = oB.offsetTop + "px";
-						oScoreText.innerText  = "+" + parseInt(that.oLi[i].score);
-						// that.oScoreText = oScoreText;
+						oScoreText.style.top = oB.offsetTop + "px";
+						oScoreText.innerText = "+" + parseInt(that.oLi[i].score);
 						that.oBox.appendChild(oScoreText);
-						setTimeout(function(){
+						setTimeout(function () {
 							that.oBox.removeChild(oScoreText);
-						},800);
+						}, 800);
 						that.oSore.innerText = parseInt(that.oSore.innerText) + parseInt(that.oLi[i].score);
 						clearInterval(that.oLi[i].timer);
 						that.oUl.removeChild(that.oLi[i]);
@@ -284,11 +285,16 @@ var Game = {
 					clearInterval(oB.timer);
 					that.oBox.removeChild(oB);
 					if (that.oLi.length == 0) {
+						console.log("level:"+that.level );
+						console.log("maxLevel:"+that.maxLevel );
 						if (that.level == that.maxLevel) {
-							document.getElementsByClassName("end")[0].style.display = "block";
+							clearInterval(that.oUl.rdTiemr);
 							clearInterval(that.oUl.timer);
 							that.oBox.removeChild(that.oUl);
+							document.getElementsByClassName("end")[0].style.display = "block";
+							
 						} else {
+							clearInterval(that.oUl.rdTiemr);
 							clearInterval(that.oUl.timer);
 							that.oBox.removeChild(that.oUl);
 							that.createEnemy(that.checkpoint[that.level]);
@@ -315,13 +321,29 @@ var Game = {
 
 			if (that.collision(that.oAir, nowLi)) {
 				if (that.oAir.innerText == 1) {
-					// that.oUl.rdTiemr
-					clearInterval(that.oUl.rdTiemr)
+					clearInterval(that.oUl.rdTiemr);
+							clearInterval(that.oUl.timer);
 					alert("游戏结束");
 					window.location.reload();
 				} else {
+					clearInterval(nowLi.timer);
 					that.oUl.removeChild(nowLi);
 					that.oAir.innerText--;
+					if (that.oLi.length == 0) {
+						if (that.level == that.maxLevel) {
+							clearInterval(that.oUl.rdTiemr);
+							clearInterval(that.oUl.timer);
+							that.oBox.removeChild(that.oUl);
+							document.getElementsByClassName("end")[0].style.display = "block";
+							
+						} else {
+							clearInterval(that.oUl.rdTiemr);
+							clearInterval(that.oUl.timer);
+							that.oBox.removeChild(that.oUl);
+							that.createEnemy(that.checkpoint[that.level]);
+							that.level++;
+						}
+					}
 				}
 			}
 		}, 80)
