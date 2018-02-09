@@ -26,9 +26,16 @@ ul,li{
 	left: 50%;
 	margin-left: -60px;
 }
-.score{
+.score,.scoretext{
 	position: absolute;
 	left: 0;
+	top: 0;
+	color: #fff;
+	font-size: 22px;
+}
+.tips{
+	position: absolute;
+	left: 18%;
 	top: 0;
 	color: #fff;
 	font-size: 22px;
@@ -38,7 +45,7 @@ ul,li{
 	position: relative;
 	top: 40px;
 }
-.enemy1,.enemy2,.enemy3{
+.enemy1,.enemy2,.enemy3,.enemy4{
 	height: 40px;
 	width: 40px;
 	box-sizing: border-box;
@@ -58,6 +65,10 @@ ul,li{
 	background:rgba(0, 247, 255, 0.562) url(../img/timg.gif) no-repeat;
 	background-size: 40px 40px;
 }
+.enemy4{
+	background:rgba(0, 255, 64, 0.562) url(../img/timg.gif) no-repeat;
+	background-size: 40px 40px;
+}
 /* .enemy1{
 	background:rgba(0, 38, 255, 0.562);
 }
@@ -70,8 +81,13 @@ ul,li{
 .air{
 	width: 60px;
 	height: 80px;
+	line-height: 80px;
 	background: deeppink;
 	position: absolute;
+	text-align: center;
+	line-break: 80px;
+	font-size: 22px;
+	color: #fff;
 }
 .bullet{
 	width: 4px;
